@@ -1,0 +1,11 @@
+services:
+  db:
+    container_name: alloydb
+    image: google/alloydbomni
+    environment:
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    volumes:
+      - alloydb_volume:/var/lib/postgresql/data
+
+volumes:
+  alloydb_volume:
