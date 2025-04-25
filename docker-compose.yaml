@@ -15,14 +15,14 @@ services:
       context: ./service
       dockerfile: Dockerfile
     command: >
-      sh -c "python3 wsgi.py"
+      sh -c "gunicorn wsgi:app -b 0.0.0.0:8000"
     volumes:
       - ./service:/app
     depends_on:
       db:
         condition: service_started
     ports:
-      - "5000:5000"
+      - "8000:8000"
     networks:
       - gateway_network
       - instances_network
