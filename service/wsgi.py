@@ -1,7 +1,6 @@
 from flask import Flask
 from config import Config
-from services import UsersService
-from repositories import UsersRepository
+from controllers import list_users_bp
 
 from extensions import db
 
@@ -10,13 +9,7 @@ app.config.from_object(Config)
 
 db.init_app(app)
 
-
-@app.route('/')
-def index():
-    users_service = UsersService(UsersRepository())
-    print(users_service.list().fetchall())
-
-    return "Hello, World!"
+app.register_blueprint(list_users_bp)
 
 
 if __name__ == '__main__':
