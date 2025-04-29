@@ -1,4 +1,5 @@
 from flask import views, request, jsonify, Blueprint
+from http import HTTPStatus
 
 from services import UsersService
 from repositories import UsersRepository
@@ -12,19 +13,15 @@ class ListUserController(views.MethodView):
         self.__users_service = users_service
 
     def get(self):
-        users = self.__users_service.list()
-        data = {
-            'users': str(users.fetchall())
-        }
+        list_users = self.__users_service.list()
 
-        return jsonify(data), 200
+        return jsonify(list_users.model_dump()), HTTPStatus.OK
 
     def post(self):
         name = request.json['name']
+        user = self.__users_service.create(name)
 
-        self.__users_service.create(name)
-
-        return jsonify(), 201
+        return jsonify(user.model_dump()), HTTPStatus.CREATED
 
 
 list_users_bp.add_url_rule(
