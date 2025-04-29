@@ -1,6 +1,6 @@
 from flask import Flask
 from config import Config
-from controllers import list_users_bp
+from controllers import list_users_bp, list_location_bp
 
 from extensions import db
 
@@ -10,6 +10,7 @@ app.config.from_object(Config)
 db.init_app(app)
 
 app.register_blueprint(list_users_bp)
+app.register_blueprint(list_location_bp)
 
 
 if __name__ == '__main__':
